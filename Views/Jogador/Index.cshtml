@@ -1,0 +1,44 @@
+﻿@model JogadorViewModel
+
+<h1>Cadastrar Jogador</h1>
+
+<div>
+    <form asp-controller="Jogador" asp-action="Salvar" method="post" class="mb-4">
+        <div class="form-group mb-2">
+            <label for="nome">Nome:</label>
+            <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome do jogador" required>
+        </div>
+        <div class="form-group mb-2">
+            <label for="nota">Nota:</label>
+            <input type="number" class="form-control" id="nota" name="nota" placeholder="Digite a nota do jogador" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+</div>
+
+<div>
+    <table class="table table-striped table-hover table-bordered w-100">
+        <thead>
+            <tr>
+                <th class="col-5">Nome</th>
+                <th class="col-5">Nota</th>
+                <th class="col-2 text-center">Deletar</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var jogador in Model.Jogadores)
+            {
+                <tr>
+                    <td class="col-5">@jogador.Nome</td>
+                    <td class="col-5">@jogador.Nota</td>
+                    <td class="col-2 text-center">
+                        <a asp-controller="Jogador" asp-action="Deletar" asp-route-id="@jogador.Id" class="btn btn-danger" onclick="return confirm('Deseja realmente deletar este jogador?');">Deletar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,6 +1,8 @@
-﻿namespace Pelada.Data
+﻿using Pelada.Data;
+
+namespace Pelada.Models
 {
-    public class Jogador
+    public class JogadorViewModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }

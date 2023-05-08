@@ -1,14 +1,17 @@
 ﻿namespace Pelada.Data
 {
-    public class Jogador
+    public class Time
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public double Nota { get; set; }
-
-        public Time? Time { get; set; }
-        public int? IdTime { get; set; }
 
         public List<Jogador> Jogadores { get; set; }
+
+        public List<Time> Times { get; set; }
+
+
+        
+
+
     }
 }

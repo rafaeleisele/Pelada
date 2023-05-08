@@ -1,11 +1,17 @@
 using Pelada.Data;
 using Microsoft.EntityFrameworkCore;
-
+using Pelada.Repositories;
+using Pelada.Services.Inteface;
+using Pelada.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<JogadorRepository>();
+builder.Services.AddScoped<ITimeService, TimeService>();
+
 
 var configuration = builder.Configuration;
 builder.Services.AddDbContext<PeladaContext>(options =>
@@ -24,6 +30,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
+
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
