@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pelada.Data;
 
@@ -11,9 +12,11 @@ using Pelada.Data;
 namespace Pelada.Migrations
 {
     [DbContext(typeof(PeladaContext))]
-    partial class PeladaContextModelSnapshot : ModelSnapshot
+    [Migration("20230609154841_Criando a coluna Ativo")]
+    partial class CriandoacolunaAtivo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

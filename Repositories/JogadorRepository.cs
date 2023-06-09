@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using Pelada.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Pelada.Repositories
@@ -21,6 +22,11 @@ namespace Pelada.Repositories
             return context.jogadores.ToList();
         }
 
+        public List<Jogador> GetJogadoresAtivos()
+        {
+            return context.jogadores.Where(x => x.Ativo == true).ToList();
+        }
+
         public Jogador GetJogadorById(int Id)
         {
             var jogador = context.jogadores.Find(Id);
@@ -28,7 +34,7 @@ namespace Pelada.Repositories
             return jogador;
         }
 
-        public void AddJogador(Jogador jogador)
+        public void Add(Jogador jogador)
         {
             context.jogadores.Add(jogador);
             context.SaveChanges();
@@ -41,5 +47,17 @@ namespace Pelada.Repositories
             context.Remove(jogador);
             context.SaveChanges();
         }
+
+        public void Update(Jogador jogador)
+        {
+            context.jogadores.Update(jogador);
+            context.SaveChanges();
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
     }
 }

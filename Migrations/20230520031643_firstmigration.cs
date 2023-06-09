@@ -5,13 +5,13 @@
 namespace Pelada.Migrations
 {
     /// <inheritdoc />
-    public partial class PrimeiraMigration : Migration
+    public partial class firstmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Time",
+                name: "times",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,11 +21,11 @@ namespace Pelada.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Time", x => x.Id);
+                    table.PrimaryKey("PK_times", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Time_Time_TimeId",
+                        name: "FK_times_times_TimeId",
                         column: x => x.TimeId,
-                        principalTable: "Time",
+                        principalTable: "times",
                         principalColumn: "Id");
                 });
 
@@ -45,14 +45,14 @@ namespace Pelada.Migrations
                 {
                     table.PrimaryKey("PK_jogadores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_jogadores_Time_TimeId",
-                        column: x => x.TimeId,
-                        principalTable: "Time",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_jogadores_jogadores_JogadorId",
                         column: x => x.JogadorId,
                         principalTable: "jogadores",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_jogadores_times_TimeId",
+                        column: x => x.TimeId,
+                        principalTable: "times",
                         principalColumn: "Id");
                 });
 
@@ -67,8 +67,8 @@ namespace Pelada.Migrations
                 column: "TimeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Time_TimeId",
-                table: "Time",
+                name: "IX_times_TimeId",
+                table: "times",
                 column: "TimeId");
         }
 
@@ -79,7 +79,7 @@ namespace Pelada.Migrations
                 name: "jogadores");
 
             migrationBuilder.DropTable(
-                name: "Time");
+                name: "times");
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pelada.Data;
 
@@ -11,9 +12,11 @@ using Pelada.Data;
 namespace Pelada.Migrations
 {
     [DbContext(typeof(PeladaContext))]
-    partial class PeladaContextModelSnapshot : ModelSnapshot
+    [Migration("20230608145031_corrigindo colunas")]
+    partial class corrigindocolunas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,8 @@ namespace Pelada.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                    b.Property<int?>("IdTime")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()

@@ -12,8 +12,8 @@ using Pelada.Data;
 namespace Pelada.Migrations
 {
     [DbContext(typeof(PeladaContext))]
-    [Migration("20230508011427_PrimeiraMigration")]
-    partial class PrimeiraMigration
+    [Migration("20230609164306_Permitindo NULL")]
+    partial class PermitindoNULL
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,11 +33,8 @@ namespace Pelada.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("IdTime")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("JogadorId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -50,8 +47,6 @@ namespace Pelada.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("JogadorId");
 
                     b.HasIndex("TimeId");
 
@@ -70,22 +65,13 @@ namespace Pelada.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TimeId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TimeId");
-
-                    b.ToTable("Time");
+                    b.ToTable("times");
                 });
 
             modelBuilder.Entity("Pelada.Data.Jogador", b =>
                 {
-                    b.HasOne("Pelada.Data.Jogador", null)
-                        .WithMany("Jogadores")
-                        .HasForeignKey("JogadorId");
-
                     b.HasOne("Pelada.Data.Time", "Time")
                         .WithMany("Jogadores")
                         .HasForeignKey("TimeId");
@@ -95,21 +81,7 @@ namespace Pelada.Migrations
 
             modelBuilder.Entity("Pelada.Data.Time", b =>
                 {
-                    b.HasOne("Pelada.Data.Time", null)
-                        .WithMany("Times")
-                        .HasForeignKey("TimeId");
-                });
-
-            modelBuilder.Entity("Pelada.Data.Jogador", b =>
-                {
                     b.Navigation("Jogadores");
-                });
-
-            modelBuilder.Entity("Pelada.Data.Time", b =>
-                {
-                    b.Navigation("Jogadores");
-
-                    b.Navigation("Times");
                 });
 #pragma warning restore 612, 618
         }

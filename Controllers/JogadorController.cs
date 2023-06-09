@@ -2,6 +2,7 @@
 using Pelada.Data;
 using Pelada.Models;
 using Pelada.Repositories;
+using System.Globalization;
 
 namespace Pelada.Controllers
 {
@@ -25,18 +26,21 @@ namespace Pelada.Controllers
         }
 
         [HttpPost]
-        public IActionResult Salvar(JogadorViewModel viewModel)
+        public IActionResult Salvar(JogadorViewModel jogadorViewModel)
         {
-            var Jogador = new Jogador
-            {
-                Nome = viewModel.Nome,
-                Nota = viewModel.Nota
-            };
+            var jogador = new Jogador();
 
-            _jogadorRepository.AddJogador(Jogador);
 
+            // Conversão da string para double com o CultureInfo correto
+            jogador.Nota = double.Parse(jogadorViewModel.Nota, CultureInfo.InvariantCulture);
+            jogador.Nome = jogadorViewModel.Nome;
+            jogador.Ativo = false;
+
+            _jogadorRepository.Add(jogador);
             return RedirectToAction("Index");
         }
+
+
 
         public IActionResult Deletar(int Id) 
         { 
@@ -44,6 +48,20 @@ namespace Pelada.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult AlterarStatusAtivo(int id, bool ativo)
+        {
+            var jogador = _jogadorRepository.GetJogadorById(id);
+            if (jogador == null)
+            {
+                return NotFound();
+            }
+
+            jogador.Ativo = ativo;
+            _jogadorRepository.Update(jogador);
+
+            return Ok();
+        }
 
 
     }

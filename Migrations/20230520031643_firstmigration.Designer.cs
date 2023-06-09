@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pelada.Data;
 
@@ -11,9 +12,11 @@ using Pelada.Data;
 namespace Pelada.Migrations
 {
     [DbContext(typeof(PeladaContext))]
-    partial class PeladaContextModelSnapshot : ModelSnapshot
+    [Migration("20230520031643_firstmigration")]
+    partial class firstmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,11 @@ namespace Pelada.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                    b.Property<int?>("IdTime")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("JogadorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -44,6 +50,8 @@ namespace Pelada.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JogadorId");
 
                     b.HasIndex("TimeId");
 
@@ -62,13 +70,22 @@ namespace Pelada.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TimeId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("TimeId");
 
                     b.ToTable("times");
                 });
 
             modelBuilder.Entity("Pelada.Data.Jogador", b =>
                 {
+                    b.HasOne("Pelada.Data.Jogador", null)
+                        .WithMany("Jogadores")
+                        .HasForeignKey("JogadorId");
+
                     b.HasOne("Pelada.Data.Time", "Time")
                         .WithMany("Jogadores")
                         .HasForeignKey("TimeId");
@@ -78,7 +95,21 @@ namespace Pelada.Migrations
 
             modelBuilder.Entity("Pelada.Data.Time", b =>
                 {
+                    b.HasOne("Pelada.Data.Time", null)
+                        .WithMany("Times")
+                        .HasForeignKey("TimeId");
+                });
+
+            modelBuilder.Entity("Pelada.Data.Jogador", b =>
+                {
                     b.Navigation("Jogadores");
+                });
+
+            modelBuilder.Entity("Pelada.Data.Time", b =>
+                {
+                    b.Navigation("Jogadores");
+
+                    b.Navigation("Times");
                 });
 #pragma warning restore 612, 618
         }

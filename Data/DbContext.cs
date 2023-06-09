@@ -7,5 +7,6 @@ namespace Pelada.Data
         public PeladaContext(DbContextOptions<PeladaContext> dbContextOptions) : base(dbContextOptions) { }
 
         public DbSet<Jogador> jogadores { get; set; }
+        public DbSet<Time> times { get; set; }
     }
 }

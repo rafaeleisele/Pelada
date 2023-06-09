@@ -1,8 +1,7 @@
 using Pelada.Data;
 using Microsoft.EntityFrameworkCore;
 using Pelada.Repositories;
-using Pelada.Services.Inteface;
-using Pelada.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<JogadorRepository>();
-builder.Services.AddScoped<ITimeService, TimeService>();
+builder.Services.AddScoped<TimeRepository>();
 
 
 var configuration = builder.Configuration;
@@ -33,7 +32,7 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Jogador}/{action=Index}/{id?}");
 });
 
 app.Run();
